@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jamshad Leather Shop - Quality Leather of Sialkot</title>
+  <style>
+    /* Reset and base styles */
+    * { box-sizing: border-box; }
+    body, html {
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9; color: #333;
+      scroll-behavior: smooth;
+    }
+
+    /* Navbar */
+    nav {
+      position: sticky; top: 0;
+      background: rgba(39, 174, 96, 0.95);
+      backdrop-filter: saturate(180%) blur(10px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.6rem 1.3rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+    }
+    nav:hover { background: #27ae60; }
+
+    nav .logo {
+      display: flex; align-items: center; gap: 12px;
+    }
+    nav .logo img {
+      height: 42px;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    nav .logo img:hover {
+      transform: rotate(15deg) scale(1.1);
+    }
+    nav .logo span {
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: 1.3px;
+      text-shadow: 0 0 7px rgba(0,0,0,0.5);
+    }
+
+    nav ul.nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+    nav ul.nav-links li a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.05rem;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    nav ul.nav-links li a:hover, nav ul.nav-links li a:focus {
+      background-color: rgba(255 255 255 / 0.3);
+      color: #d4f1be;
+    }
+
+    nav .search-bar {
+      position: relative;
+    }
+    nav .search-bar input {
+      padding: 0.45rem 1rem;
+      border-radius: 25px;
+      border: none;
+      outline: none;
+      width: 180px;
+      font-size: 1rem;
+      transition: box-shadow 0.3s ease;
+    }
+    nav .search-bar input:focus {
+      box-shadow: 0 0 12px #a2d18c;
+    }
+    nav .search-bar button {
+      position: absolute;
+      right: 6px; top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    nav .search-bar button:hover {
+      color: #d4f1be;
+    }
+
+    /* Hamburger menu */
+    #menuToggle { display: none; }
+    label.hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 30px;
+      height: 22px;
+      justify-content: space-between;
+    }
+    label.hamburger span {
+      height: 3.5px;
+      background: white;
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+    @media (max-width: 768px) {
+      nav ul.nav-links {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        height: calc(100vh - 60px);
+        width: 240px;
+        background: rgba(39, 174, 96, 0.98);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        gap: 1.8rem;
+        padding: 1.5rem 1rem;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        border-radius: 0 0 0 15px;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.25);
+        z-index: 1100;
+      }
+      #menuToggle:checked ~ ul.nav-links {
+        transform: translateX(0);
+      }
+      nav .search-bar { display: none; }
+      label.hamburger { display: flex; }
+    }
+
+    /* Header */
+    header {
+      position: relative;
+      overflow: hidden;
+      max-height: 450px;
+      user-select: none;
+    }
+    header img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      filter: brightness(0.55);
+      transition: transform 0.5s ease;
+    }
+    header img:hover {
+      transform: scale(1.05);
+    }
+    header .welcome-text {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      text-align: center;
+      text-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
+    header .welcome-text h1 {
+      font-size: 3.8rem;
+      margin-bottom: 0.3rem;
+      font-weight: 900;
+    }
+    header .welcome-text p {
+      font-size: 1.7rem;
+      font-weight: 600;
+      letter-spacing: 1.1px;
+    }
+
+    /* Main */
+    main {
+      max-width: 1100px;
+      margin: 3rem auto 4rem auto;
+      padding: 0 1rem;
+    }
+    h2.section-title {
+      font-size: 2.5rem;
+      color: #27ae60;
+      margin-bottom: 1.5rem;
+      border-bottom: 3px solid #27ae60;
+      padding-bottom: 0.5rem;
+      font-weight: 800;
+    }
+
+    /* Product Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+    }
+    .product-card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 0 18px rgb(0 0 0 / 0.1);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .product-card img {
+      width: 100%;
+      height: 150px; /* <-- Image height, change this to increase or decrease */
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .product-card img:hover {
+      transform: scale(1.07);
+    }
+    .product-info {
+      padding: 1.2rem;
+      flex-grow: 1;
+    }
+    .product-info h3 {
+      margin: 0 0 0.4rem 0;
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+    .product-info p {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 1rem;
+      min-height: 40px;
+    }
+    .price {
+      color: #27ae60;
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+
+    /* Forms */
+    form {
+      background: white;
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgb(0 0 0 / 0.15);
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+    form label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+      color: #222;
+    }
+    form input, form select {
+      width: 100%;
+      padding: 0.55rem 1rem;
+      margin-bottom: 1.2rem;
+      border: 2px solid #27ae60;
+      border-radius: 25px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    form input:focus, form select:focus {
+      border-color: #145214;
+    }
+    form button {
+      background-color: #27ae60;
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 0.7rem 2.5rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1.15rem;
+      box-shadow: 0 6px 12px rgba(39,174,96,0.5);
+      transition: background-color 0.3s ease;
+    }
+    form button:hover {
+      background-color: #145214;
+    }
+
+    /* Contact */
+    #contact {
+      background: #27ae60;
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+    #contact h2 {
+      margin-bottom: 1rem;
+      font-weight: 900;
+      font-size: 2.8rem;
+    }
+    #contact p {
+      font-size: 1.3rem;
+      margin: 0.5rem 0;
+    }
+    #contact a {
+      color: #d4f1be;
+      text-decoration: underline;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    /* Footer */
+    footer {
+      background: #145214;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.7px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">
+      <img src="download (20).jpg" alt="Logo" />
+      <span>Jamshad Leather Shop</span>
+    </div>
+
+    <input type="checkbox" id="menuToggle" />
+    <label class="hamburger" for="menuToggle">
+      <span></span><span></span><span></span>
+    </label>
+
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#order">Order Now</a></li>
+      <li><a href="#login">Login</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="search-bar">
+      <input type="search" id="searchInput" placeholder="Search products..." />
+      <button onclick="searchProducts()">🔍</button>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header id="home">
+    <img src="host.jpg" alt="Shop" />
+    <div class="welcome-text">
+      <h1>Welcome to Jamshad Leather Shop</h1>
+      <p>Quality Leather of Sialkot</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Products Section -->
+    <section id="products">
+      <h2 class="section-title">Our Products</h2>
+      
+    <p>High-quality leather product number 1. <mark>5000</mark></p>
+    <img src="images (23).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>7000</mark></p>
+    <img src="images (20).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>5000</mark></p>
+    <img src="images (22).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>8000</mark></p>
+    <img src="images (21).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>6000</mark></p>
+    <img src="p.jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>1000</mark></p>
+    <img src="images (17).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>5000</mark></p>
+    <img src="images (18).jpg" alt=""height="600">
+    img src="images (17).jpg" alt="" height="600">
+    <p>High-quality leather product number 1. <mark>5000</mark></p>
+    <img src="images (23).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>7000</mark></p>
+    <img src="images (20).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>5000</mark></p>
+    <img src="images (22).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>8000</mark></p>
+    <img src="images (21).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>6000</mark></p>
+    <img src="p.jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>1000</mark></p>
+    <img src="images (17).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>5000</mark></p>
+    <img src="images (18).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>500</mark></p>
+    
+    <img src="download (26).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>5000</mark></p>
+    <img src="download (25).jpg" alt=""height="600">
+    <p>High-quality leather product number 1. <mark>800</mark></p>
+    
+      <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <!-- Order Section -->
+    <section id="order">
+      <h2 class="section-title">Place Your Order</h2>
+      <form id="orderForm" onsubmit="return validateOrderForm(event)">
+        <label for="customerName">Name</label>
+        <input type="text" id="customerName" required />
+
+        <label for="customerPhone">Phone</label>
+        <input type="tel" id="customerPhone" required />
+
+        <label for="productSelect">Product</label>
+        <select id="productSelect" required>
+          <option value="">--Choose a product--</option>
+        </select>
+
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" min="1" max="20" value="1" />
+
+        <button type="submit">Submit Order</button>
+      </form>
+    </section>
+
+    <!-- Login Section -->
+    <section id="login">
+      <h2 class="section-title">Login / Register</h2>
+      <form onsubmit="alert('Login/Register submitted'); return false;">
+        <label>Email</label>
+        <input type="email" required />
+        <label>Password</label>
+        <input type="password" required />
+        <button type="submit">Login</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p><strong>Phone:</strong> +92 300 1234567</p>
+    <p><strong>Email:</strong> support@jamshadleather.com</p>
+    <p><strong>Address:</strong> 123 Leather Street, Sialkot, Pakistan</p>
+   <a href="https://www.facebook.com/share/16yQAk3rwx/">Facebook
+    link page
+   </a>
+    
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Jamshad Leather Shop. All rights reserved.
+  </footer>
+
+  <script>
+    // Sample products data
+    const products = [
+      { id: 1, name: "Leather Wallet", description: "Premium quality leather wallet.", price: 2500, img: "images (18).jpg" },
+      { id: 2, name: "Leather Belt", description: "Stylish and durable leather belt.", price: 1800, img: "download (25).jpg" },
+      { id: 3, name: "Leather Bag", description: "Spacious and trendy leather bag.", price: 7000, img: "download (27).jpg" },
+      { id: 4, name: "Leather Jacket", description: "Warm and stylish leather jacket.", price: 12000, img: "images (21).jpg" },
+    ];
+
+    // Render products cards
+    const productsGrid = document.getElementById('productsGrid');
+    const productSelect = document.getElementById('productSelect');
+
+    function renderProducts() {
+      products.forEach(product => {
+        // Create product card
+        const card = document.createElement('div');
+        card.className = 'product-card';
+
+        card.innerHTML = `
+          <img src="${product.img}" alt="${product.name}" />
+          <div class="product-info">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <div class="price">Rs. ${product.price.toLocaleString()}</div>
+          </div>
+        `;
+
+        productsGrid.appendChild(card);
+
+        // Add product to order select dropdown
+        const option = document.createElement('option');
+        option.value = product.id;
+        option.textContent = product.name;
+        productSelect.appendChild(option);
+      });
+
+      // Animate products fade in
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach((card, idx) => {
+        setTimeout(() => {
+          card.classList.add('visible');
+        }, idx * 150);
+      });
+    }
+
+    renderProducts();
+
+    // Search products (simple client-side filter)
+    function searchProducts() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        if(name.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Order form validation
+    function validateOrderForm(event) {
+      event.preventDefault();
+      const name = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('customerPhone').value.trim();
+      const productId = document.getElementById('productSelect').value;
+      const quantity = parseInt(document.getElementById('quantity').value, 10);
+
+      if(name === '' || phone === '' || productId === '') {
+        alert('Please fill all required fields.');
+        return false;
+      }
+      if(quantity < 1 || quantity > 20) {
+        alert('Quantity must be between 1 and 20.');
+        return false;
+      }
+
+      alert(`Thank you, ${name}! Your order has been placed.`);
+      // Here you can add code to send order data to server
+
+      event.target.reset();
+      return false;
+    }
+  </script>
+
+</body>
+</html>
